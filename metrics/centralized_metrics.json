@@ -1,0 +1,87 @@
+{
+  "accuracy": 0.7002941176470588,
+  "precision": 0.0,
+  "recall": 0.0,
+  "f1": 0.0,
+  "confusion_matrix": [
+    [
+      2381,
+      0
+    ],
+    [
+      1019,
+      0
+    ]
+  ],
+  "classification_report": {
+    "BENIGN": {
+      "precision": 0.7002941176470588,
+      "recall": 1.0,
+      "f1-score": 0.8237329181802456,
+      "support": 2381.0
+    },
+    "ATTACK": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 1019.0
+    },
+    "accuracy": 0.7002941176470588,
+    "macro avg": {
+      "precision": 0.3501470588235294,
+      "recall": 0.5,
+      "f1-score": 0.4118664590901228,
+      "support": 3400.0
+    },
+    "weighted avg": {
+      "precision": 0.49041185121107267,
+      "recall": 0.7002941176470588,
+      "f1-score": 0.5768553171138721,
+      "support": 3400.0
+    }
+  },
+  "roc_auc": 0.797392177769791,
+  "training_time_seconds": 3.90478777885437,
+  "timestamp": "2026-09-28T13:00:18.084854+00:00",
+  "experiment": "centralized",
+  "config": {
+    "seed": 42,
+    "dataset": {
+      "path": "data/raw",
+      "label_column": "Label",
+      "test_size": 0.2,
+      "max_rows": null,
+      "sample_fraction": 1.0
+    },
+    "features": {
+      "selection_method": "selectkbest",
+      "num_features": 40,
+      "user_features": []
+    },
+    "training": {
+      "epochs": 5,
+      "batch_size": 128,
+      "learning_rate": 0.001,
+      "validation_split": 0.1,
+      "patience": 2,
+      "max_samples": 100000
+    },
+    "federated": {
+      "num_clients": 3,
+      "rounds": 5,
+      "local_epochs": 1,
+      "partition": "non_iid",
+      "aggregation": "fedavg"
+    },
+    "privacy": {
+      "enabled": true,
+      "clip_norm": 1.0,
+      "noise_multiplier": 1.0,
+      "delta": 1e-06
+    },
+    "dashboard": {
+      "max_upload_mb": 100
+    }
+  },
+  "selected_features": 40
+}
