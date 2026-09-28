@@ -1,0 +1,4 @@
+experiment,accuracy,precision,recall,f1,roc_auc,training_time_seconds,dp_enabled,num_clients,rounds
+centralized,0.7002941176470588,0.0,0.0,0.0,0.797392177769791,3.90478777885437,,,
+federated,0.7002941176470588,0.0,0.0,0.0,0.811844587445837,24.91491150856018,False,3,5
+federated_dp,0.7002941176470588,0.0,0.0,0.0,0.5,28.49827766418457,True,3,5
