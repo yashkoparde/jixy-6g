@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6G AI-IDS & Privacy Preservation - Synopsis Roadmap</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --accent-cyan: #00f2fe;
+            --accent-blue: #4facfe;
+            --accent-purple: #7f56d9;
+            --accent-green: #2ea043;
+            --text-main: #c9d1d9;
+            --text-heading: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            background: linear-gradient(180deg, rgba(0, 242, 254, 0.1) 0%, rgba(22, 27, 34, 0) 100%);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            color: var(--text-heading);
+            font-size: 2.2rem;
+            margin: 0 0 10px 0;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            color: #8b949e;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--accent-cyan), var(--accent-purple));
+            border-radius: 2px;
+        }
+
+        .step-card {
+            position: relative;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 24px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-cyan);
+        }
+
+        .step-number {
+            position: absolute;
+            left: -44px;
+            top: 24px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--accent-cyan);
+            color: #0d1117;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            box-shadow: 0 0 10px var(--accent-cyan);
+        }
+
+        .step-title {
+            font-size: 1.3rem;
+            color: var(--text-heading);
+            margin: 0 0 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-badge {
+            background-color: rgba(46, 160, 67, 0.2);
+            color: var(--accent-green);
+            border: 1px solid var(--accent-green);
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .step-desc {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #8b949e;
+            margin-bottom: 15px;
+        }
+
+        .deliverables {
+            background-color: rgba(13, 17, 23, 0.6);
+            border-radius: 6px;
+            padding: 12px 16px;
+            border-left: 3px solid var(--accent-blue);
+        }
+
+        .deliverables h4 {
+            margin: 0 0 6px 0;
+            color: var(--accent-blue);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .deliverables ul {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+
+        .deliverables li {
+            margin-bottom: 4px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #484f58;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>6G Intrusion Detection & Privacy Preservation</h1>
+            <p>Final Synopsis Implementation Roadmap & Execution Workflow</p>
+        </div>
+
+        <div class="timeline">
+            <!-- Step 1 -->
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <div class="step-title">
+                    Network Flow Ingestion & Cleaning
+                    <span class="status-badge">Completed</span>
+                </div>
+                <div class="step-desc">
+                    Ingested full 80-feature CSE-CIC-IDS2018 telemetry flow schema into <code>data/raw/</code>. Performed normalization of header names, string stripping, and mapped attacks into binary classification targets (BENIGN vs ATTACK).
+                </div>
+                <div class="deliverables">
+                    <h4>Artifacts Generated:</h4>
+                    <ul>
+                        <li>Raw benchmark CSV: <code>data/raw/cse_cic_ids2018_dataset.csv</code> (15,000 flow rows)</li>
+                        <li>Cleaning Script: <code>src/data/preprocessing.py</code></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <div class="step-title">
+                    Stratified Preprocessing & Feature Selection
+                    <span class="status-badge">Completed</span>
+                </div>
+                <div class="step-desc">
+                    Applied SelectKBest feature selection to extract the top 40 predictive flow features. Fitted median imputation and standard scaling strictly on training rows to prevent test-set data leakage.
+                </div>
+                <div class="deliverables">
+                    <h4>Artifacts Generated:</h4>
+                    <ul>
+                        <li>Preprocessed NumPy Arrays: <code>data/processed/dataset.npz</code></li>
+                        <li>Saved Scaler & Imputer: <code>models/preprocessor.joblib</code></li>
+                        <li>Selected Features Manifest: <code>models/selected_features.json</code></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <div class="step-title">
+                    Centralized 1D-CNN Baseline Training
+                    <span class="status-badge">Completed</span>
+                </div>
+                <div class="step-desc">
+                    Built a 1D Convolutional Neural Network (1D-CNN) with Conv1D, BatchNormalization, Dropout, and Sigmoid classification. Trained on pooled data to establish a non-federated baseline.
+                </div>
+                <div class="deliverables">
+                    <h4>Artifacts Generated:</h4>
+                    <ul>
+                        <li>Saved Model: <code>models/centralized_model.keras</code></li>
+                        <li>Metrics JSON: <code>metrics/centralized_metrics.json</code></li>
+                        <li>Plots: ROC curves & Confusion matrices in <code>plots/</code></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <div class="step-title">
+                    Simulated Edge Federated Learning (FedAvg)
+                    <span class="status-badge">Completed</span>
+                </div>
+                <div class="step-desc">
+                    Partitioned telemetry across simulated edge clients using label-skewed Non-IID distributions. Evaluated local client training and central coordinator aggregation over 5 rounds using sample-weighted FedAvg.
+                </div>
+                <div class="deliverables">
+                    <h4>Artifacts Generated:</h4>
+                    <ul>
+                        <li>Federated Model: <code>models/federated_model.keras</code></li>
+                        <li>Federated Metrics: <code>results/federated/federated_metrics.json</code></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="step-card">
+                <div class="step-number">5</div>
+                <div class="step-title">
+                    Differential Privacy (DP) Perturbation
+                    <span class="status-badge">Completed</span>
+                </div>
+                <div class="step-desc">
+                    Integrated client-update differential privacy by clipping parameter deltas to L2 norm bound (C=1.0) and adding independent Gaussian noise (σ=1.0) prior to FedAvg aggregation.
+                </div>
+                <div class="deliverables">
+                    <h4>Artifacts Generated:</h4>
+                    <ul>
+                        <li>DP Federated Model: <code>models/federated_dp_model.keras</code></li>
+                        <li>DP Metrics: <code>results/differential_privacy/federated_dp_metrics.json</code></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 6 -->
+            <div class="step-card">
+                <div class="step-number">6</div>
+                <div class="step-title">
+                    Interactive Streamlit Web Dashboard
+                    <span class="status-badge">Completed & Live</span>
+                </div>
+                <div class="step-desc">
+                    Constructed a dark-mode 6G cyber security web dashboard featuring real-time CSV threat prediction, Plotly comparative charts, feature badge lists, and architectural workflow visualization.
+                </div>
+                <div class="deliverables">
+                    <h4>Deliverable URL:</h4>
+                    <ul>
+                        <li>Dashboard App: <code>app.py</code> running at <code>http://localhost:8501</code></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            AI Powered Intrusion Detection and Privacy Preservation in 6G Networks • Project Synopsis Roadmap
+        </div>
+    </div>
+</body>
+</html>
