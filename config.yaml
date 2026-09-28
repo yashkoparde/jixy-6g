@@ -1,0 +1,31 @@
+seed: 42
+dataset:
+  path: data/raw
+  label_column: Label
+  test_size: 0.2
+  max_rows: null
+  sample_fraction: 1.0
+features:
+  selection_method: selectkbest
+  num_features: 40
+  user_features: []
+training:
+  epochs: 5
+  batch_size: 128
+  learning_rate: 0.001
+  validation_split: 0.1
+  patience: 2
+  max_samples: 100000
+federated:
+  num_clients: 3
+  rounds: 5
+  local_epochs: 1
+  partition: non_iid
+  aggregation: fedavg
+privacy:
+  enabled: true
+  clip_norm: 1.0
+  noise_multiplier: 1.0
+  delta: 0.000001
+dashboard:
+  max_upload_mb: 100
