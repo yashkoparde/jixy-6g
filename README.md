@@ -144,7 +144,7 @@ Open your browser and navigate to: **[http://localhost:8501](http://localhost:85
 ## 🧪 Testing Live Threat Detection (Demo Instructions)
 
 1. Open the dashboard at **[http://localhost:8501](http://localhost:8501)**.
-2. Navigate to the **`🛡️ Threat Inference Engine`** tab.
+2. The dashboard defaults directly to the **`🛡️ Threat Inference Engine`** primary tab.
 3. Click **Browse Files** and upload any sample from **[data/processed/sample_test_csvs](data/processed/sample_test_csvs)**:
    - 📄 **`ddos_attack_threat_sample.csv`** → *DDoS Attack Burst (100% Threat Risk Detected)*
    - 📄 **`botnet_infected_node_sample.csv`** → *Botnet C2 Telemetry (ATTACK Flagged)*
