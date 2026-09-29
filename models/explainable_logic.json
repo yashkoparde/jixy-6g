@@ -1,0 +1,165 @@
+{
+  "feature_importances": [
+    [
+      "flow pkts/s",
+      0.675847589969635
+    ],
+    [
+      "fwd iat tot",
+      0.20111489295959473
+    ],
+    [
+      "flow duration",
+      0.050672873854637146
+    ],
+    [
+      "tot fwd pkts",
+      0.04469865560531616
+    ],
+    [
+      "protocol",
+      0.0036274443846195936
+    ],
+    [
+      "fwd pkt len max",
+      0.0029107474256306887
+    ],
+    [
+      "bwd pkt len max",
+      0.0028470030520111322
+    ],
+    [
+      "dst port",
+      0.002777117770165205
+    ],
+    [
+      "flow iat max",
+      0.0026821913197636604
+    ],
+    [
+      "bwd pkt len min",
+      0.0023990473710000515
+    ],
+    [
+      "flow iat std",
+      0.002246204996481538
+    ],
+    [
+      "flow iat min",
+      0.002217984991148114
+    ],
+    [
+      "fwd pkt len std",
+      0.00212420173920691
+    ],
+    [
+      "flow iat mean",
+      0.0019800022710114717
+    ],
+    [
+      "totlen fwd pkts",
+      0.001854149391874671
+    ],
+    [
+      "fwd iat std",
+      0.0
+    ],
+    [
+      "fwd iat min",
+      0.0
+    ],
+    [
+      "bwd iat tot",
+      0.0
+    ],
+    [
+      "bwd iat std",
+      0.0
+    ],
+    [
+      "bwd iat max",
+      0.0
+    ],
+    [
+      "bwd psh flags",
+      0.0
+    ],
+    [
+      "fwd urg flags",
+      0.0
+    ],
+    [
+      "pkt len min",
+      0.0
+    ],
+    [
+      "pkt len max",
+      0.0
+    ],
+    [
+      "pkt len var",
+      0.0
+    ],
+    [
+      "cwe flag count",
+      0.0
+    ],
+    [
+      "down/up ratio",
+      0.0
+    ],
+    [
+      "pkt size avg",
+      0.0
+    ],
+    [
+      "bwd seg size avg",
+      0.0
+    ],
+    [
+      "fwd byts/b avg",
+      0.0
+    ],
+    [
+      "fwd pkts/b avg",
+      0.0
+    ],
+    [
+      "bwd pkts/b avg",
+      0.0
+    ],
+    [
+      "subflow fwd pkts",
+      0.0
+    ],
+    [
+      "subflow bwd pkts",
+      0.0
+    ],
+    [
+      "init bwd win byts",
+      0.0
+    ],
+    [
+      "fwd act data pkts",
+      0.0
+    ],
+    [
+      "fwd seg size min",
+      0.0
+    ],
+    [
+      "active mean",
+      0.0
+    ],
+    [
+      "idle std",
+      0.0
+    ],
+    [
+      "idle min",
+      0.0
+    ]
+  ],
+  "tree_reasoning_rules": "|--- down/up ratio <= 0.03\n|   |--- flow iat std <= -1.69\n|   |   |--- pkt len var <= 0.59\n|   |   |   |--- class: 0.0\n|   |   |--- pkt len var >  0.59\n|   |   |   |--- class: 1.0\n|   |--- flow iat std >  -1.69\n|   |   |--- flow duration <= -0.05\n|   |   |   |--- class: 0.0\n|   |   |--- flow duration >  -0.05\n|   |   |   |--- class: 1.0\n|--- down/up ratio >  0.03\n|   |--- flow duration <= 0.46\n|   |   |--- bwd iat tot <= 1.40\n|   |   |   |--- class: 0.0\n|   |   |--- bwd iat tot >  1.40\n|   |   |   |--- class: 0.0\n|   |--- flow duration >  0.46\n|   |   |--- cwe flag count <= 1.40\n|   |   |   |--- class: 1.0\n|   |   |--- cwe flag count >  1.40\n|   |   |   |--- class: 0.0\n"
+}
