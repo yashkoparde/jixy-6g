@@ -108,151 +108,16 @@ st.markdown("""
 
 cfg = load_config()
 
-# Interactive Tabs
+# Interactive Tabs (Threat Inference Engine Promoted to First Position)
 tabs = st.tabs([
+    '🛡️ Threat Inference Engine',
     '🌐 System Architecture',
     '📊 Benchmark Metrics',
     '🧠 Explainable AI Reasoning',
-    '🔬 Telemetry Features',
-    '🛡️ Threat Inference Engine'
+    '🔬 Telemetry Features'
 ])
 
 with tabs[0]:
-    col1, col2 = st.columns([1.8, 1])
-    with col1:
-        st.subheader("6G Zero-Trust Architecture")
-        st.markdown("""
-        ```text
-        [CSE-CIC-IDS2018 Telemetry] ──► [Header Normalization & Cleaning]
-                                                        │
-                                                        ▼
-                                    [80-Feature Stratified Train/Test Split]
-                                                        │
-                      ┌─────────────────────────────────┴─────────────────────────────────┐
-                      ▼                                                                   ▼
-        [Centralized Deep Baseline]                                         [Simulated Edge Clients]
-         (Pooled Data Training)                                              (Local Process Isolation)
-                      │                                                                   │
-                      │                                                     [Local 1D-CNN & GBDT Models]
-                      │                                                                   │
-                      │                                                     [DP Noise & L2 Norm Clipping]
-                      │                                                                   │
-                      │                                                     [Sample-Weighted FedAvg]
-                      │                                                                   │
-                      └─────────────────────────────────┬─────────────────────────────────┘
-                                                        ▼
-                                       [Global Evaluation & Inference]
-        ```
-        """)
-        st.info("💡 **Security Principle:** Edge clients maintain absolute data isolation. Only noise-perturbed weight deltas and sample counts enter the central aggregation channel.")
-
-    with col2:
-        st.subheader("Federated & Privacy Parameters")
-        st.json({
-            'Simulated Edge Nodes': cfg['federated']['num_clients'],
-            'FL Rounds': cfg['federated']['rounds'],
-            'Data Partition': cfg['federated']['partition'],
-            'Privacy Engine': {
-                'DP Status': cfg['privacy']['enabled'],
-                'L2 Norm Bound (C)': cfg['privacy']['clip_norm'],
-                'Noise Multiplier (σ)': cfg['privacy']['noise_multiplier'],
-                'Delta Target (δ)': cfg['privacy']['delta']
-            }
-        })
-
-with tabs[1]:
-    st.subheader("Model Benchmark Matrix")
-    
-    paths = [
-        ROOT / 'metrics' / 'centralized_metrics.json',
-        ROOT / 'results' / 'federated' / 'federated_metrics.json',
-        ROOT / 'results' / 'differential_privacy' / 'federated_dp_metrics.json'
-    ]
-    
-    rows = []
-    for p in paths:
-        if p.exists():
-            d = json.loads(p.read_text(encoding='utf-8'))
-            rows.append({
-                'Experiment': d.get('experiment', '').upper(),
-                'Accuracy': f"{d.get('accuracy', 0)*100:.2f}%",
-                'Precision': f"{d.get('precision', 0)*100:.2f}%",
-                'Recall': f"{d.get('recall', 0)*100:.2f}%",
-                'F1-Score': f"{d.get('f1', 0)*100:.2f}%",
-                'ROC-AUC': f"{d.get('roc_auc', 0):.4f}",
-                'Training Time (s)': f"{d.get('training_time_seconds', 0):.2f}s",
-                'DP Perturbation': "ENABLED" if d.get('dp_enabled') else "DISABLED"
-            })
-            
-    if rows:
-        st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
-        
-        st.subheader("Comparative Benchmark Charts")
-        metrics_data = []
-        for p in paths:
-            if p.exists():
-                d = json.loads(p.read_text(encoding='utf-8'))
-                exp = d.get('experiment', '').replace('_', ' ').title()
-                metrics_data.extend([
-                    {'Experiment': exp, 'Metric': 'Accuracy', 'Value': d.get('accuracy', 0)},
-                    {'Experiment': exp, 'Metric': 'Precision', 'Value': d.get('precision', 0)},
-                    {'Experiment': exp, 'Metric': 'Recall', 'Value': d.get('recall', 0)},
-                    {'Experiment': exp, 'Metric': 'F1-Score', 'Value': d.get('f1', 0)},
-                    {'Experiment': exp, 'Metric': 'ROC-AUC', 'Value': d.get('roc_auc', 0)}
-                ])
-        if metrics_data:
-            fig = px.bar(pd.DataFrame(metrics_data), x='Metric', y='Value', color='Experiment', barmode='group',
-                         title="Baseline vs Federated vs DP-Federated Performance",
-                         color_discrete_sequence=['#00f2fe', '#4facfe', '#7f56d9'], template='plotly_dark')
-            st.plotly_chart(fig, use_container_width=True)
-
-    c1, c2 = st.columns(2)
-    with c1:
-        cm_path = ROOT / 'plots' / 'centralized_confusion_matrix.png'
-        if cm_path.exists():
-            st.image(str(cm_path), caption="Centralized Baseline Confusion Matrix", use_container_width=True)
-    with c2:
-        roc_path = ROOT / 'plots' / 'centralized_roc_curve.png'
-        if roc_path.exists():
-            st.image(str(roc_path), caption="Centralized ROC Curve", use_container_width=True)
-
-with tabs[2]:
-    st.subheader("🧠 Explainable AI: Model Thinking & Decision Tree Rules")
-    st.write("Examine how the Gradient Boosted Trees (XGBoost) model weighs network telemetry to make predictions.")
-    
-    exp_path = ROOT / 'models' / 'explainable_logic.json'
-    if exp_path.exists():
-        logic_data = json.loads(exp_path.read_text(encoding='utf-8'))
-        
-        c_exp1, c_exp2 = st.columns([1.2, 1])
-        with c_exp1:
-            st.subheader("Feature Importance Weights (AI Decision Drivers)")
-            imp_df = pd.DataFrame(logic_data['feature_importances'], columns=['Feature', 'Importance Weight'])
-            top_imp = imp_df[imp_df['Importance Weight'] > 0].head(10)
-            
-            fig_imp = px.bar(
-                top_imp, x='Importance Weight', y='Feature', orientation='h',
-                title="XGBoost Feature Importance Weights",
-                color='Importance Weight', color_continuous_scale='tealgrn', template='plotly_dark'
-            )
-            fig_imp.update_layout(yaxis={'categoryorder': 'total ascending'})
-            st.plotly_chart(fig_imp, use_container_width=True)
-            
-        with c_exp2:
-            st.subheader("Explicit Decision Tree Rules")
-            st.write("IF-THEN decision rules extracted from the model (Class 0.0 = BENIGN, Class 1.0 = ATTACK):")
-            st.code(logic_data['tree_reasoning_rules'], language='text')
-
-with tabs[3]:
-    st.subheader("Selected Telemetry Features")
-    feat_path = ROOT / 'models' / 'selected_features.json'
-    if feat_path.exists():
-        feats = json.loads(feat_path.read_text(encoding='utf-8'))
-        st.write(f"**Total Extracted Features ({len(feats)}):**")
-        badge_html = " ".join([f'<span style="background:#121826; color:#00f2fe; border:1px solid #30363d; padding:6px 12px; border-radius:6px; margin:4px; display:inline-block; font-family:monospace;">{f}</span>' for f in feats])
-        st.markdown(badge_html, unsafe_allow_html=True)
-
-with tabs[4]:
     st.subheader("🛡️ Threat Inference Engine & Visual Analytics")
     st.write("Upload a network flow CSV file to perform real-time intrusion classification and visualize threat telemetry.")
     
@@ -342,3 +207,138 @@ with tabs[4]:
                 )
             except Exception as e:
                 st.error(f"Inference failed: {e}")
+
+with tabs[1]:
+    col1, col2 = st.columns([1.8, 1])
+    with col1:
+        st.subheader("6G Zero-Trust Architecture")
+        st.markdown("""
+        ```text
+        [CSE-CIC-IDS2018 Telemetry] ──► [Header Normalization & Cleaning]
+                                                        │
+                                                        ▼
+                                    [80-Feature Stratified Train/Test Split]
+                                                        │
+                      ┌─────────────────────────────────┴─────────────────────────────────┐
+                      ▼                                                                   ▼
+        [Centralized Deep Baseline]                                         [Simulated Edge Clients]
+         (Pooled Data Training)                                              (Local Process Isolation)
+                      │                                                                   │
+                      │                                                     [Local 1D-CNN & GBDT Models]
+                      │                                                                   │
+                      │                                                     [DP Noise & L2 Norm Clipping]
+                      │                                                                   │
+                      │                                                     [Sample-Weighted FedAvg]
+                      │                                                                   │
+                      └─────────────────────────────────┬─────────────────────────────────┘
+                                                        ▼
+                                       [Global Evaluation & Inference]
+        ```
+        """)
+        st.info("💡 **Security Principle:** Edge clients maintain absolute data isolation. Only noise-perturbed weight deltas and sample counts enter the central aggregation channel.")
+
+    with col2:
+        st.subheader("Federated & Privacy Parameters")
+        st.json({
+            'Simulated Edge Nodes': cfg['federated']['num_clients'],
+            'FL Rounds': cfg['federated']['rounds'],
+            'Data Partition': cfg['federated']['partition'],
+            'Privacy Engine': {
+                'DP Status': cfg['privacy']['enabled'],
+                'L2 Norm Bound (C)': cfg['privacy']['clip_norm'],
+                'Noise Multiplier (σ)': cfg['privacy']['noise_multiplier'],
+                'Delta Target (δ)': cfg['privacy']['delta']
+            }
+        })
+
+with tabs[2]:
+    st.subheader("Model Benchmark Matrix")
+    
+    paths = [
+        ROOT / 'metrics' / 'centralized_metrics.json',
+        ROOT / 'results' / 'federated' / 'federated_metrics.json',
+        ROOT / 'results' / 'differential_privacy' / 'federated_dp_metrics.json'
+    ]
+    
+    rows = []
+    for p in paths:
+        if p.exists():
+            d = json.loads(p.read_text(encoding='utf-8'))
+            rows.append({
+                'Experiment': d.get('experiment', '').upper(),
+                'Accuracy': f"{d.get('accuracy', 0)*100:.2f}%",
+                'Precision': f"{d.get('precision', 0)*100:.2f}%",
+                'Recall': f"{d.get('recall', 0)*100:.2f}%",
+                'F1-Score': f"{d.get('f1', 0)*100:.2f}%",
+                'ROC-AUC': f"{d.get('roc_auc', 0):.4f}",
+                'Training Time (s)': f"{d.get('training_time_seconds', 0):.2f}s",
+                'DP Perturbation': "ENABLED" if d.get('dp_enabled') else "DISABLED"
+            })
+            
+    if rows:
+        st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
+        
+        st.subheader("Comparative Benchmark Charts")
+        metrics_data = []
+        for p in paths:
+            if p.exists():
+                d = json.loads(p.read_text(encoding='utf-8'))
+                exp = d.get('experiment', '').replace('_', ' ').title()
+                metrics_data.extend([
+                    {'Experiment': exp, 'Metric': 'Accuracy', 'Value': d.get('accuracy', 0)},
+                    {'Experiment': exp, 'Metric': 'Precision', 'Value': d.get('precision', 0)},
+                    {'Experiment': exp, 'Metric': 'Recall', 'Value': d.get('recall', 0)},
+                    {'Experiment': exp, 'Metric': 'F1-Score', 'Value': d.get('f1', 0)},
+                    {'Experiment': exp, 'Metric': 'ROC-AUC', 'Value': d.get('roc_auc', 0)}
+                ])
+        if metrics_data:
+            fig = px.bar(pd.DataFrame(metrics_data), x='Metric', y='Value', color='Experiment', barmode='group',
+                         title="Baseline vs Federated vs DP-Federated Performance",
+                         color_discrete_sequence=['#00f2fe', '#4facfe', '#7f56d9'], template='plotly_dark')
+            st.plotly_chart(fig, use_container_width=True)
+
+    c1, c2 = st.columns(2)
+    with c1:
+        cm_path = ROOT / 'plots' / 'centralized_confusion_matrix.png'
+        if cm_path.exists():
+            st.image(str(cm_path), caption="Centralized Baseline Confusion Matrix", use_container_width=True)
+    with c2:
+        roc_path = ROOT / 'plots' / 'centralized_roc_curve.png'
+        if roc_path.exists():
+            st.image(str(roc_path), caption="Centralized ROC Curve", use_container_width=True)
+
+with tabs[3]:
+    st.subheader("🧠 Explainable AI: Model Thinking & Decision Tree Rules")
+    st.write("Examine how the Gradient Boosted Trees (XGBoost) model weighs network telemetry to make predictions.")
+    
+    exp_path = ROOT / 'models' / 'explainable_logic.json'
+    if exp_path.exists():
+        logic_data = json.loads(exp_path.read_text(encoding='utf-8'))
+        
+        c_exp1, c_exp2 = st.columns([1.2, 1])
+        with c_exp1:
+            st.subheader("Feature Importance Weights (AI Decision Drivers)")
+            imp_df = pd.DataFrame(logic_data['feature_importances'], columns=['Feature', 'Importance Weight'])
+            top_imp = imp_df[imp_df['Importance Weight'] > 0].head(10)
+            
+            fig_imp = px.bar(
+                top_imp, x='Importance Weight', y='Feature', orientation='h',
+                title="XGBoost Feature Importance Weights",
+                color='Importance Weight', color_continuous_scale='tealgrn', template='plotly_dark'
+            )
+            fig_imp.update_layout(yaxis={'categoryorder': 'total ascending'})
+            st.plotly_chart(fig_imp, use_container_width=True)
+            
+        with c_exp2:
+            st.subheader("Explicit Decision Tree Rules")
+            st.write("IF-THEN decision rules extracted from the model (Class 0.0 = BENIGN, Class 1.0 = ATTACK):")
+            st.code(logic_data['tree_reasoning_rules'], language='text')
+
+with tabs[4]:
+    st.subheader("Selected Telemetry Features")
+    feat_path = ROOT / 'models' / 'selected_features.json'
+    if feat_path.exists():
+        feats = json.loads(feat_path.read_text(encoding='utf-8'))
+        st.write(f"**Total Extracted Features ({len(feats)}):**")
+        badge_html = " ".join([f'<span style="background:#121826; color:#00f2fe; border:1px solid #30363d; padding:6px 12px; border-radius:6px; margin:4px; display:inline-block; font-family:monospace;">{f}</span>' for f in feats])
+        st.markdown(badge_html, unsafe_allow_html=True)
