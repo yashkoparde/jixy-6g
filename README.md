@@ -55,12 +55,12 @@ flowchart TD
 
 Quick links to project repository documents and visual manifests:
 
-- 🗺️ **[Synopsis Implementation Roadmap](roadmap.html)**: Interactive step-by-step roadmap showing how all 6 synopsis milestones were completed.
-- 📊 **[Telemetry & Dataset Ingestion Manifest](datasets.html)**: Visual breakdown of CSE-CIC-IDS2018 schema, 80 extracted features, and sample test files.
-- 📄 **[Final Synopsis Word Report](Final%20Synopsis%20Report%20(Major).docx)**: Complete academic report document with problem statements, literature review, and objectives.
-- 📁 **[Sample Test CSV Directory](data/processed/sample_test_csvs)**: Directory containing 7 pre-packaged threat and benign telemetry CSV files ready for live inference upload.
-- 🔬 **[Selected Features Manifest](models/selected_features.json)**: JSON artifact recording top 40 selected feature names.
-- 🧠 **[Explainable AI Rules & Importance Weights](models/explainable_logic.json)**: Decision tree IF-THEN rules and feature importance weights.
+- 🗺️ **[Synopsis Implementation Roadmap](https://github.com/yashkoparde/jixy-6g/blob/main/roadmap.html)**: Interactive step-by-step roadmap showing how all 6 synopsis milestones were completed.
+- 📊 **[Telemetry & Dataset Ingestion Manifest](https://github.com/yashkoparde/jixy-6g/blob/main/datasets.html)**: Visual breakdown of CSE-CIC-IDS2018 schema, 80 extracted features, and sample test files.
+- 📄 **[Final Synopsis Word Report](https://github.com/yashkoparde/jixy-6g/blob/main/Final%20Synopsis%20Report%20(Major).docx)**: Complete academic report document with problem statements, literature review, and objectives.
+- 📁 **[Sample Test CSV Directory](https://github.com/yashkoparde/jixy-6g/tree/main/data/processed/sample_test_csvs)**: Directory containing 7 pre-packaged threat and benign telemetry CSV files ready for live inference upload.
+- 🔬 **[Selected Features Manifest](https://github.com/yashkoparde/jixy-6g/blob/main/models/selected_features.json)**: JSON artifact recording top 40 selected feature names.
+- 🧠 **[Explainable AI Rules & Importance Weights](https://github.com/yashkoparde/jixy-6g/blob/main/models/explainable_logic.json)**: Decision tree IF-THEN rules and feature importance weights.
 
 ---
 
